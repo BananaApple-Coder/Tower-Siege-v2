@@ -56,11 +56,9 @@ function setup() {
   //top
   blocks9 = new Block(700,95,30,40);
 
-  //polygon holder with slings
-  polygon = Bodies.circle(50,200,20);
-  World.add(world,polygon);
+  polygon = new obj(100, 200, 15)
+  slingShot = new Slingshot(polygon.body,{x:100,y:200});
   
-  slingShot = new Slingshot(this.polygon,{x:100,y:200});
 
 }
 function draw() {
@@ -112,17 +110,22 @@ function draw() {
   blocks9.display();
   fill("gold");
   imageMode(CENTER)
-  image(polygon_img ,polygon.position.x,polygon.position.y,40,40);
+  polygon.display()
 
   slingShot.display();
   
 }
 function mouseDragged(){
-  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
+  Matter.Body.setPosition(polygon.body,{x:mouseX,y:mouseY});
 }
 function mouseReleased(){
   slingShot.fly();
 }
+
+
 function keyPressed(){
-//write code for extra chance of the player
+  if(keyCode === 32){
+      slingShot.attach(polygon.body);
+      Matter.Body.setPosition(polygon.body, {x:100, y:200})
+  }
 }
